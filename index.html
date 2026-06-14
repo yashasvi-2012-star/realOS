@@ -1,133 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>ZENOS OS</title>
 
 <style>
-
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:'Segoe UI',sans-serif;
+    font-family:Segoe UI, sans-serif;
 }
 
 body{
     height:100vh;
-    overflow:hidden;
-
-    background:url('https://4kwallpapers.com/images/walls/thumbs_2t/25242.jpg');
-    background-size:cover;
-    background-position:center;
-    background-repeat:no-repeat;
+    overflow:hidden;   
+    background:url('https://4kwallpapers.com/images/walls/thumbs_2t/25242.jpg') center/cover no-repeat;
 }
-
-/* Overlay */
 
 body::before{
     content:'';
     position:absolute;
     inset:0;
-
-    background:
-    linear-gradient(
-    rgba(60,10,25,.15),
-    rgba(80,15,35,.35));
-
+    background:linear-gradient(rgba(60,10,25,.2), rgba(80,15,35,.4));
     pointer-events:none;
 }
 
-/* Header */
-
+/* HEADER */
 .header{
     position:absolute;
-
     top:15px;
     left:15px;
     right:15px;
-
-    height:80px;
-
+    height:70px;
     display:flex;
     justify-content:space-between;
     align-items:center;
-
-    padding:0 30px;
-
-    border-radius:20px;
-
-    background:rgba(90,20,35,.40);
-
-    backdrop-filter:blur(20px);
-
-    border:1px solid rgba(255,255,255,.15);
-
+    padding:0 25px;
+    border-radius:18px;
+    background:rgba(90,20,35,.4);
+    backdrop-filter:blur(15px);
     color:white;
-
-    z-index:100;
+    z-index:1000;
 }
 
-.logo{
-    font-size:32px;
-    font-weight:700;
-    color:#ffd6dc;
+.logo{ font-size:28px; font-weight:700; }
+
+.datetime{ display:flex; gap:40px; }
+
+/* WINDOWS */
+.window{
+    position:absolute;
+    background:rgba(90,20,35,.45);
+    backdrop-filter:blur(15px);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:16px;
+    color:white;
+    overflow:hidden;
+    z-index:10;
 }
 
-.datetime{
+.windowHeader{
+    padding:10px;
+    backgrodnd:rgba(255,255,255,.1);
+    cursor:move;
+    font-weight:bold;
+}
+
+/* CALCULATOR */
+#calculator{
+    width:300px;
+    left:40px;
+    top:140px;
+}
+
+#display{
+    width:90%;
+    margin:10px;
+    height:50px;
+    border:none;
+    border-radius:8px;
+    padding:10px;
+    font-size:20px;
+}
+
+.buttons{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:6px;
+    padding:10px;
+}
+
+button{
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+/* NOTEPAD */
+#notepad{
+    width:380px;
+    height:260px;
+    right:40px;
+    top:200px;
+}
+
+textarea{
+    width:100%;
+    height:210px;
+    border:none;
+    outline:none;
+    resize:none;
+    padding:10px;
+    background:transparent;
+    color:white;
+}
+
+/* DRAWING */
+#drawingApp{
+    width:520px;
+    height:430px;
+    left:350px;
+    top:160px;
+}
+
+.drawingTools{
     display:flex;
-    gap:80px;
+    align-items:center;
+    gap:10px;
+    padding:10px;
+    background:rgba(255,255,255,.06);
+}
+
+.drawingTools input[type="color"]{
+    width:42px;
+    height:36px;
+    border:none;
+    border-radius:8px;
+    background:transparent;
+    cursor:pointer;
+}
+
+.drawingTools input[type="range"]{
+    width:120px;
+    accent-color:#ffd6dc;
+}
+
+.drawingTools button{
+    padding:9px 12px;
+    background:rgba(255,255,255,.88);
+    color:#40101d;
     font-weight:600;
 }
-/*drawing tool*/
-#drawingApp{
-    width:540px;
-    height:400px;
 
-    left:400px;
-    top:150px;
+.drawingTools button.active{
+    background:#ffd6dc;
 }
 
-#drawingCanvas{
+canvas{
     display:block;
-
     margin:10px auto;
-
-    border:1px solid rgba(255,255,255,.2);
-
-    border-radius:12px;
-
     background:rgba(0,0,0,.2);
-
+    border-radius:10px;
     cursor:crosshair;
+    touch-action:none;
 }
-/* Big Clock */
 
+/* SPOTIFY */
+#spotify{
+    width:340px;
+    height:450px;
+    left:60px;
+    top:420px;
+}
+
+/* CLOCK */
 #bigClock{
-
     position:absolute;
-
     left:50%;
     top:50%;
-
     transform:translate(-50%,-50%);
-
-    width:240px;
-    height:240px;
-
+    width:220px;
+    height:220px;
     border-radius:50%;
-
-    background:rgba(90,20,35,.40);
-
-    backdrop-filter:blur(20px);
-
-    border:4px solid rgba(255,255,255,.2);
-
-    box-shadow:
-    0 10px 40px rgba(0,0,0,.3);
-
-    z-index:15;
+    background:rgba(90,20,35,.4);
+    backdrop-filter:blur(15px);
+    border:1px solid rgba(255,255,255,.15);
+    z-index:30;
 }
 
 .hand{
@@ -137,574 +198,268 @@ body::before{
     transform-origin:bottom;
 }
 
-.hourHand{
-    width:6px;
-    height:70px;
-    background:white;
-    margin-left:-3px;
-}
+.hour{ width:6px; height:60px; background:white; margin-left:-3px; }
+.minute{ width:4px; height:80px; background:white; margin-left:-2px; }
+.second{ width:2px; height:95px; background:#ffd6dc; margin-left:-1px; }
 
-.minuteHand{
-    width:4px;
-    height:95px;
-    background:white;
-    margin-left:-2px;
-}
-
-.secondHand{
-    width:2px;
-    height:115px;
-    background:#ffd6dc;
-    margin-left:-1px;
-}
-
-.centerDot{
+.center{
     position:absolute;
-    width:14px;
-    height:14px;
+    width:12px;
+    height:12px;
     border-radius:50%;
     background:white;
-    left:50%;
     top:50%;
+    left:50%;
     transform:translate(-50%,-50%);
 }
-#clockDragArea{
 
+#dragClock{
     position:absolute;
-
     inset:0;
-
-    border-radius:50%;
-
     cursor:move;
-
-    z-index:50;
+    z-index:4;
 }
-
-/* Windows */
-
-.window{
-
-    position:absolute;
-
-    background:rgba(90,20,35,.40);
-
-    backdrop-filter:blur(20px);
-
-    border-radius:20px;
-
-    border:1px solid rgba(255,255,255,.15);
-
-    color:white;
-
-    overflow:hidden;
-}
-
-.windowHeader{
-
-    padding:12px 15px;
-
-    background:rgba(255,255,255,.08);
-
-    cursor:move;
-
-    font-weight:bold;
-}
-
-/* Calculator */
-
-#calculator{
-
-    width:320px;
-
-    left:40px;
-    top:160px;
-}
-
-#display{
-
-    width:90%;
-    height:55px;
-
-    margin:15px;
-
-    border:none;
-
-    border-radius:10px;
-
-    padding:10px;
-
-    font-size:22px;
-}
-
-.buttons{
-
-    display:grid;
-
-    grid-template-columns:
-    repeat(4,1fr);
-
-    gap:8px;
-
-    padding:0 15px 15px;
-}
-
-.buttons button{
-
-    height:50px;
-
-    border:none;
-
-    border-radius:10px;
-
-    cursor:pointer;
-
-    font-size:18px;
-}
-
-/* Notepad */
-
-#notepad{
-
-    width:420px;
-    height:300px;
-
-    right:40px;
-    top:220px;
-}
-
-#notepad textarea{
-
-    width:100%;
-    height:250px;
-
-    border:none;
-
-    outline:none;
-
-    resize:none;
-
-    background:transparent;
-
-    color:white;
-
-    padding:15px;
-
-    font-size:16px;
-}
-
-/* Bottom Left Image */
-
-#cornerImage{
-
-    position:absolute;
-
-    right:25px;
-    bottom:25px;
-
-    width:280px;
-
-    border-radius:20px;
-
-    box-shadow:
-    0 10px 30px rgba(0,0,0,.3);
-
-    z-index:20;
-}
-
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
-
 <div class="header">
-
-    <div class="logo">
-        ZENOS
-    </div>
-
+    <div class="logo">ZENOS</div>
     <div class="datetime">
-
         <span id="day"></span>
-
         <span id="date"></span>
-
         <span id="time"></span>
-
     </div>
-
 </div>
 
-<!-- BIG CLOCK -->
-
+<!-- CLOCK -->
 <div id="bigClock">
-
-    <div id="clockDragArea"></div>
-
-    <div class="hand hourHand"></div>
-
-    <div class="hand minuteHand"></div>
-
-    <div class="hand secondHand"></div>
-
-    <div class="centerDot"></div>
-
+    <div id="dragClock"></div>
+    <div class="hand hour"></div>
+    <div class="hand minute"></div>
+    <div class="hand second"></div>
+    <div class="center"></div>
 </div>
+
 <!-- CALCULATOR -->
-
 <div id="calculator" class="window">
-
-    <div class="windowHeader">
-         Calculator
-    </div>
-
-    <input id="display" readonly>
-
+    <div class="windowHeader">Calculator</div>
+    <input id="display" readonly />
     <div class="buttons">
+        <button onclick="add('7')">7</button>
+        <button onclick="add('8')">8</button>
+        <button onclick="add('9')">9</button>
+        <button onclick="add('+')">+</button>
 
-        <button onclick="clearDisplay()">C</button>
-        <button onclick="appendValue('/')">/</button>
-        <button onclick="appendValue('*')">*</button>
-        <button onclick="appendValue('-')">-</button>
+        <button onclick="add('4')">4</button>
+        <button onclick="add('5')">5</button>
+        <button onclick="add('6')">6</button>
+        <button onclick="add('-')">-</button>
 
-        <button onclick="appendValue('7')">7</button>
-        <button onclick="appendValue('8')">8</button>
-        <button onclick="appendValue('9')">9</button>
-        <button onclick="appendValue('+')">+</button>
+        <button onclick="add('1')">1</button>
+        <button onclick="add('2')">2</button>
+        <button onclick="add('3')">3</button>
+        <button onclick="calc()">=</button>
 
-        <button onclick="appendValue('4')">4</button>
-        <button onclick="appendValue('5')">5</button>
-        <button onclick="appendValue('6')">6</button>
-        <button onclick="calculate()">=</button>
-
-        <button onclick="appendValue('1')">1</button>
-        <button onclick="appendValue('2')">2</button>
-        <button onclick="appendValue('3')">3</button>
-        <button onclick="appendValue('.')">.</button>
-
-        <button onclick="appendValue('0')">0</button>
-
+        <button onclick="add('0')">0</button>
+        <button onclick="clearCalc()">C</button>
     </div>
-
 </div>
 
 <!-- NOTEPAD -->
-
 <div id="notepad" class="window">
-
-    <div class="windowHeader">
-         Notepad
-    </div>
-
-    <textarea placeholder="Write your notes here..."></textarea>
-
+    <div class="windowHeader">Notepad</div>
+    <textarea placeholder="write something..."></textarea>
 </div>
-<!--drawing tool-->
-<!-- DRAWING APP -->
 
+<!-- DRAWING -->
 <div id="drawingApp" class="window">
-
-    <div class="windowHeader">
-        Drawing Pad
+    <div class="windowHeader">Drawing Pad</div>
+    <div class="drawingTools">
+        <input id="brushColor" type="color" value="#ffffff" title="Brush color" />
+        <input id="brushSize" type="range" min="1" max="30" value="3" title="Brush size" />
+        <button id="eraserBtn" type="button">Eraser</button>
+        <button id="clearCanvas" type="button">Clear</button>
     </div>
-
-    <div style="padding:10px;">
-        <button onclick="clearCanvas()">Clear</button>
-        <input type="color" id="brushColor" value="#ffffff">
-    </div>
-
-    <canvas id="drawingCanvas"
-        width="500"
-        height="300"></canvas>
-
+    <canvas id="canvas" width="500" height="300"></canvas>
 </div>
 
-<!-- IMAGE -->
-
-<img
-id="cornerImage"
-src="https://i.pinimg.com/236x/d0/4e/f2/d04ef2f6596eab4b2f9d9d1630d235a8.jpg"
-alt="image">
+<!-- SPOTIFY -->
+<div id="spotify" class="window">
+    <div class="windowHeader">Spotify</div>
+    <iframe
+        src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M"
+        width="320"
+        height="380"
+        frameborder="0"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+    </iframe>
+</div>
 
 <script>
 
-/* Header Time */
-
+/* TIME */
 function updateTime(){
-
-    const now = new Date();
-
-    document.getElementById("day").innerText =
-    now.toLocaleDateString(
-    'en-US',
-    {weekday:'long'}
-    );
-
-    document.getElementById("date").innerText =
-    now.toLocaleDateString(
-    'en-US',
-    {
-        day:'numeric',
-        month:'long',
-        year:'numeric'
-    });
-
-    document.getElementById("time").innerText =
-    now.toLocaleTimeString(
-    'en-US',
-    {
-        hour12:true
-    });
+    const now=new Date();
+    document.getElementById("day").innerText=now.toLocaleDateString('en-US',{weekday:'long'});
+    document.getElementById("date").innerText=now.toLocaleDateString('en-US',{day:'numeric',month:'long',year:'numeric'});
+    document.getElementById("time").innerText=now.toLocaleTimeString('en-US',{hour12:true});
 }
-
 setInterval(updateTime,1000);
 updateTime();
 
-/* Analog Clock */
-
+/* CLOCK */
 function updateClock(){
+    const now=new Date();
+    const h=now.getHours()%12;
+    const m=now.getMinutes();
+    const s=now.getSeconds();
 
-    const now = new Date();
-
-    const h =
-    now.getHours()%12;
-
-    const m =
-    now.getMinutes();
-
-    const s =
-    now.getSeconds();
-
-    document.querySelector(
-    ".hourHand"
-    ).style.transform =
-    `rotate(${h*30+m/2}deg)`;
-
-    document.querySelector(
-    ".minuteHand"
-    ).style.transform =
-    `rotate(${m*6}deg)`;
-
-    document.querySelector(
-    ".secondHand"
-    ).style.transform =
-    `rotate(${s*6}deg)`;
+    document.querySelector(".hour").style.transform=`rotate(${h*30+m/2}deg)`;
+    document.querySelector(".minute").style.transform=`rotate(${m*6}deg)`;
+    document.querySelector(".second").style.transform=`rotate(${s*6}deg)`;
 }
-
 setInterval(updateClock,1000);
 updateClock();
 
-/* Calculator */
+/* CALCULATOR */
+let display=document.getElementById("display");
+function add(v){ display.value+=v; }
+function clearCalc(){ display.value=""; }
+function calc(){ try{ display.value=eval(display.value); } catch{ alert("Error"); } }
 
-function appendValue(v){
-    document.getElementById("display").value += v;
-}
+/* DRAG */
+let topLayer=40;
 
-function clearDisplay(){
-    document.getElementById("display").value = "";
-}
+function drag(el){
+    const header=el.querySelector(".windowHeader");
+    let dragging=false,ox=0,oy=0;
 
-function calculate(){
-
-    try{
-        document.getElementById("display").value =
-        eval(
-        document.getElementById("display").value
-        );
-    }
-
-    catch{
-        alert("Invalid Expression");
-    }
-}
-
-/* Draggable Windows */
-
-function makeDraggable(element){
-
-    const header =
-    element.querySelector(
-    ".windowHeader"
-    );
-
-    let dragging = false;
-
-    let offsetX = 0;
-    let offsetY = 0;
-
-    header.onmousedown = function(e){
-
-        dragging = true;
-
-        offsetX =
-        e.clientX -
-        element.offsetLeft;
-
-        offsetY =
-        e.clientY -
-        element.offsetTop;
-    };
-
-    document.onmousemove = function(e){
-
-        if(!dragging) return;
-
-        element.style.left =
-        (e.clientX-offsetX)+"px";
-
-        element.style.top =
-        (e.clientY-offsetY)+"px";
-
-        element.style.right = "auto";
-    };
-
-    document.onmouseup = function(){
-
-        dragging = false;
-    };
-}
-
-makeDraggable(
-document.getElementById(
-"calculator"
-));
-
-makeDraggable(
-document.getElementById(
-"notepad"
-));
-function makeClockDraggable(clock){
-
-    const dragArea =
-    document.getElementById(
-    "clockDragArea"
-    );
-
-    let dragging=false;
-
-    let offsetX=0;
-    let offsetY=0;
-
-    dragArea.onmousedown=function(e){
-
+    header.addEventListener("pointerdown",(e)=>{
         dragging=true;
+        el.style.zIndex=++topLayer;
+        ox=e.clientX-el.offsetLeft;
+        oy=e.clientY-el.offsetTop;
+        header.setPointerCapture(e.pointerId);
+    });
 
-        offsetX=
-        e.clientX-clock.offsetLeft;
-
-        offsetY=
-        e.clientY-clock.offsetTop;
-    };
-
-    document.onmousemove=function(e){
-
+    header.addEventListener("pointermove",(e)=>{
         if(!dragging) return;
+        el.style.left=(e.clientX-ox)+"px";
+        el.style.top=(e.clientY-oy)+"px";
+        el.style.right="auto";
+    });
 
-        clock.style.left=
-        (e.clientX-offsetX)+"px";
-
-        clock.style.top=
-        (e.clientY-offsetY)+"px";
-
-        clock.style.transform="none";
-    };
-
-    document.onmouseup=function(){
-
+    header.addEventListener("pointerup",(e)=>{
         dragging=false;
+        header.releasePointerCapture(e.pointerId);
+    });
+
+    header.addEventListener("pointercancel",()=>dragging=false);
+}
+
+drag(document.getElementById("calculator"));
+drag(document.getElementById("notepad"));
+drag(document.getElementById("drawingApp"));
+drag(document.getElementById("spotify"));
+
+/* CLOCK DRAG */
+function dragClock(clock){
+    const area=document.getElementById("dragClock");
+    let dragging=false,ox=0,oy=0;
+
+    area.addEventListener("pointerdown",(e)=>{
+        const rect=clock.getBoundingClientRect();
+        dragging=true;
+        clock.style.zIndex=++topLayer;
+        clock.style.left=rect.left+"px";
+        clock.style.top=rect.top+"px";
+        clock.style.transform="none";
+        ox=e.clientX-rect.left;
+        oy=e.clientY-rect.top;
+        area.setPointerCapture(e.pointerId);
+    });
+
+    area.addEventListener("pointermove",(e)=>{
+        if(!dragging) return;
+        clock.style.left=(e.clientX-ox)+"px";
+        clock.style.top=(e.clientY-oy)+"px";
+    });
+
+    area.addEventListener("pointerup",(e)=>{
+        dragging=false;
+        area.releasePointerCapture(e.pointerId);
+    });
+
+    area.addEventListener("pointercancel",()=>dragging=false);
+}
+dragClock(document.getElementById("bigClock"));
+
+/* DRAWING */
+const canvas=document.getElementById("canvas");
+const ctx=canvas.getContext("2d");
+const brushColor=document.getElementById("brushColor");
+const brushSize=document.getElementById("brushSize");
+const eraserBtn=document.getElementById("eraserBtn");
+const clearCanvas=document.getElementById("clearCanvas");
+let drawing=false;
+let erasing=false;
+
+eraserBtn.addEventListener("click",()=>{
+    erasing=!erasing;
+    eraserBtn.classList.toggle("active",erasing);
+    canvas.style.cursor=erasing ? "cell" : "crosshair";
+});
+
+clearCanvas.addEventListener("click",()=>{
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+});
+
+function setBrush(){
+    ctx.lineWidth=brushSize.value;
+    ctx.lineCap="round";
+    ctx.lineJoin="round";
+    ctx.globalCompositeOperation=erasing ? "destination-out" : "source-over";
+    ctx.strokeStyle=brushColor.value;
+}
+
+function getCanvasPoint(e){
+    const rect=canvas.getBoundingClientRect();
+    return {
+        x:(e.clientX-rect.left)*(canvas.width/rect.width),
+        y:(e.clientY-rect.top)*(canvas.height/rect.height)
     };
 }
 
-makeClockDraggable(
-document.getElementById(
-"bigClock"
-));
-
-makeDraggable(
-document.getElementById("drawingApp")
-);
-
-const canvas =
-document.getElementById(
-"drawingCanvas"
-);
-
-const ctx =
-canvas.getContext("2d");
-
-let drawing = false;
-
-canvas.addEventListener(
-"mousedown",
-startDraw
-);
-
-canvas.addEventListener(
-"mousemove",
-draw
-);
-
-canvas.addEventListener(
-"mouseup",
-stopDraw
-);
-
-canvas.addEventListener(
-"mouseleave",
-stopDraw
-);
-
-function startDraw(e){
-
-    drawing = true;
-
+canvas.addEventListener("pointerdown",(e)=>{
+    const point=getCanvasPoint(e);
+    drawing=true;
+    canvas.setPointerCapture(e.pointerId);
+    setBrush();
     ctx.beginPath();
+    ctx.moveTo(point.x,point.y);
+});
 
-    ctx.moveTo(
-        e.offsetX,
-        e.offsetY
-    );
-}
-
-function draw(e){
-
+canvas.addEventListener("pointermove",(e)=>{
     if(!drawing) return;
-
-    ctx.lineWidth = 3;
-
-    ctx.lineCap = "round";
-
-    ctx.strokeStyle =
-    document.getElementById(
-    "brushColor"
-    ).value;
-
-    ctx.lineTo(
-        e.offsetX,
-        e.offsetY
-    );
-
+    const point=getCanvasPoint(e);
+    setBrush();
+    ctx.lineTo(point.x,point.y);
     ctx.stroke();
-}
+});
 
-function stopDraw(){
-
-    drawing = false;
-
+canvas.addEventListener("pointerup",(e)=>{
+    drawing=false;
+    canvas.releasePointerCapture(e.pointerId);
     ctx.beginPath();
-}
+});
 
-function clearCanvas(){
-
-    ctx.clearRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
-}
+canvas.addEventListener("pointercancel",()=>{
+    drawing=false;
+    ctx.beginPath();
+});
+      
 </script>
 
 </body>
