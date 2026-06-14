@@ -1,5 +1,5 @@
 # ZENOS 
-ENOS is basically a clean, minimal desktop-style OS UI that feels smooth, modern, and actually fun to use — not just another static interface.
+ZENOS is basically a clean, minimal desktop-style OS UI that feels smooth, modern, and actually fun to use — not just another static interface.
 
 This project is now in its completed phase with a solid set of tools built right into the system:
 
